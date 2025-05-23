@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@layer base {
+  html,
+  body {
+    @apply bg-gradient-to-br from-blue-50 to-indigo-50;
+  }
+}
