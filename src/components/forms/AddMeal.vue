@@ -1,37 +1,34 @@
 <script setup lang="ts">
+import type { AddMeal } from '@/lib/types/AddMeal';
 import type { FormSubmitEvent } from '@nuxt/ui';
+import { AddMealSchema } from '@/lib/types/AddMeal';
 import { reactive } from 'vue';
-import * as z from 'zod';
 
 interface Props {
   isOpen: boolean;
 }
 
 defineProps<Props>();
+const emit = defineEmits<{
+  (e: 'close'): void;
+  (e: 'submit', meal: AddMeal): void;
+}>();
 
-const schema = z.object({
-  mealName: z.string({ message: 'Name is required' }),
-  time: z.string(),
-  description: z.string().optional(),
-});
-
-type Schema = z.output<typeof schema>;
-
-const state = reactive<Schema>({
+const state = reactive<AddMeal>({
   mealName: '',
   time: '',
 });
 
 const toast = useToast();
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function onSubmit(event: FormSubmitEvent<AddMeal>) {
   toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' });
-  console.log(event.data);
+  emit('submit', event.data);
 }
 </script>
 
 <template>
-  <Modal title="Add New Meal" :is-open="isOpen">
-    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <Modal title="Add New Meal" :is-open="isOpen" @close="() => $emit('close')">
+    <UForm :schema="AddMealSchema" :state="state" class="space-y-4" @submit="onSubmit">
       <UFormField label="Meal Name" name="mealName">
         <UInput v-model="state.mealName" class="w-full" />
       </UFormField>
@@ -42,8 +39,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <UTextarea v-model="state.description" class="w-full" />
       </UFormField>
 
-      <UButton type="button">Cancel</UButton>
-      <UButton type="submit">Submit</UButton>
+      <div class="flex justify-end gap-3">
+        <UButton type="button" variant="outline">Cancel</UButton>
+        <UButton type="submit">Submit</UButton>
+      </div>
     </UForm>
   </Modal>
 </template>

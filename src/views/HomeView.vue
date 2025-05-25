@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Meal } from '@/lib/types/Meal';
+import type { AddMeal } from '@/lib/types/AddMeal';
 import { useDateStore } from '@/stores/date';
 import { useMealsStore } from '@/stores/meals';
 import { ref } from 'vue';
@@ -9,7 +9,7 @@ const mealStore = useMealsStore();
 
 const showAddModal = ref(false);
 
-function handleAddMeal(mealData: Omit<Meal, 'id' | 'completed'>) {
+function handleAddMeal(mealData: AddMeal) {
   // TODO: handle adding meals here
   console.warn(mealData);
   showAddModal.value = false;
@@ -34,5 +34,9 @@ function handleAddMeal(mealData: Omit<Meal, 'id' | 'completed'>) {
     </UCard>
   </main>
 
-  <AddMeal :is-open="showAddModal" />
+  <AddMeal
+    :is-open="showAddModal"
+    @close="() => (showAddModal = false)"
+    @submit="(e) => handleAddMeal(e)"
+  />
 </template>
