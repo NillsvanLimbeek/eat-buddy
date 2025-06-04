@@ -89,7 +89,7 @@ const status = computed(() => {
           ]"
           @click="handleToggleComplete"
         >
-          <CheckCircle v-if="meal.completed" size="18" />
+          <CheckCircle v-if="meal.completed" :size="18" />
         </button>
 
         <input
@@ -99,7 +99,7 @@ const status = computed(() => {
           class="border-b-2 border-blue-300 bg-transparent py-1 px-1 font-medium text-gray-800 focus:outline-none focus:border-blue-500"
           placeholder="Meal name"
           @keyup.enter="handleSaveEdit"
-        />
+        >
         <div v-else class="flex items-center space-x-2 cursor-pointer" @click="showModal = true">
           <h3
             class="font-medium"
@@ -107,7 +107,7 @@ const status = computed(() => {
           >
             {{ meal.name }}
           </h3>
-          <Info size="16" class="text-gray-400" />
+          <Info :size="16" class="text-gray-400" />
         </div>
       </div>
 
@@ -117,7 +117,7 @@ const status = computed(() => {
           v-model="editedTime"
           type="time"
           class="border-b-2 border-blue-300 bg-transparent py-1 px-1 text-sm focus:outline-none focus:border-blue-500"
-        />
+        >
         <div
           v-else
           class="flex items-center text-sm"
@@ -129,7 +129,7 @@ const status = computed(() => {
                 : 'text-blue-600',
           ]"
         >
-          <Clock size="14" class="mr-1" />
+          <Clock :size="14" class="mr-1" />
           {{ meal.time }}
         </div>
 
@@ -138,21 +138,21 @@ const status = computed(() => {
           class="p-1 text-blue-500 hover:text-blue-700 transition-colors"
           @click="handleSaveEdit"
         >
-          <Save size="18" />
+          <Save :size="18" />
         </button>
         <button
           v-else
           class="p-1 text-gray-400 hover:text-blue-600 transition-colors"
           @click="handleStartEdit"
         >
-          <Edit2 size="18" />
+          <Edit2 :size="18" />
         </button>
 
         <button
           class="p-1 text-gray-400 hover:text-red-600 transition-colors"
           @click="handleDelete"
         >
-          <Trash2 size="18" />
+          <Trash2 :size="18" />
         </button>
       </div>
     </div>
